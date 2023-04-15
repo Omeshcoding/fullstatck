@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import Filter from '../src/components/Filter';
+import Persons from '../src/components/Persons';
+import PersonForm from '../src/components/PersonForm';
 const App = () => {
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
@@ -9,6 +12,11 @@ const App = () => {
     { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
     { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 },
   ]);
+
+  const handleSearch = (e) => setSearchName(e.target.value);
+  const handleName = (e) => setNewName(e.target.value);
+  const handleNumber = (e) => setNewNumber(e.target.value);
+
   const handleClick = (e) => {
     e.preventDefault();
     const newContact = {
@@ -22,6 +30,8 @@ const App = () => {
         setPersons([...persons, newContact]);
       }
     });
+    setNewName('');
+    setNewNumber('');
     return alert(`${newName} is already added to phonebook`);
   };
 
@@ -30,49 +40,27 @@ const App = () => {
       return person.name;
     }
   });
+
   return (
     <div>
       <h2>Phonebook</h2>
 
-      <div>
-        filter shown with
-        <input
-          value={searchName}
-          onChange={(e) => setSearchName(e.target.value)}
-        />
-      </div>
+      <Filter searchName={searchName} handleSearch={handleSearch} />
+
       <form>
-        <h2>add a new</h2>
-        <div>
-          name:
-          <input
-            value={newName}
-            onChange={(e) => {
-              setNewName(e.target.value);
-            }}
-          />
-        </div>
-        <div>
-          number:
-          <input
-            value={newNumber}
-            onChange={(e) => setNewNumber(e.target.value)}
-          />
-        </div>
-        <div>
-          <button type="submit" onClick={handleClick}>
-            add
-          </button>
-        </div>
+        <h3>add a new</h3>
+        <PersonForm
+          name={newName}
+          handleName={handleName}
+          number={newNumber}
+          handleNumber={handleNumber}
+          handleClick={handleClick}
+        />
       </form>
-      <h2>Numbers</h2>
+      <h3>Numbers</h3>
       {filterByName.map((person, index) => {
         return (
-          <div key={index}>
-            <p>
-              {person.name} {person.number}
-            </p>
-          </div>
+          <Persons name={person.name} number={person.number} key={index} />
         );
       })}
     </div>
