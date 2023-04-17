@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import contactService from './services/contact';
 
 import Filter from '../src/components/Filter';
 import Persons from '../src/components/Persons';
@@ -21,13 +22,13 @@ const App = () => {
       name: newName,
       number: newNumber,
     };
-    persons.map((person) => {
-      if (person.name === newContact.name) {
-        setPersons(persons);
-      } else {
-        setPersons([...persons, newContact]);
-      }
-    });
+    persons.map((person) =>
+      person.name === newContact.name
+        ? setPersons(persons)
+        : setPersons([...persons, newContact])
+    );
+
+    contactService.create(newContact).then((returnedData) => returnedData);
     setNewName('');
     setNewNumber('');
     return alert(`${newName} is already added to phonebook`);
@@ -40,11 +41,8 @@ const App = () => {
   });
 
   useEffect(() => {
-    console.log('effect');
-    axios.get('http://localhost:3003/persons').then((response) => {
-      console.log(response);
-      console.log('response fullfilled');
-      setPersons(response.data);
+    contactService.getAll().then((initialData) => {
+      setPersons(initialData);
     });
   }, []);
 
