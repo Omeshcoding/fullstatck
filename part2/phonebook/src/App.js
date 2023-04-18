@@ -40,6 +40,14 @@ const App = () => {
     }
   });
 
+  const deleteNumber = (id, name) => {
+    console.log('deleted', id);
+    const newContact = persons.filter((person) => person.id !== id);
+    contactService.deleteContact(id).then((response) => {
+      window.confirm(`Delete ${name}`) && setPersons(newContact);
+    });
+  };
+
   useEffect(() => {
     contactService.getAll().then((initialData) => {
       setPersons(initialData);
@@ -65,7 +73,13 @@ const App = () => {
       <h3>Numbers</h3>
       {filterByName.map((person, index) => {
         return (
-          <Persons name={person.name} number={person.number} key={index} />
+          <Persons
+            name={person.name}
+            number={person.number}
+            key={index}
+            id={person.id}
+            deleteNumber={deleteNumber}
+          />
         );
       })}
     </div>
