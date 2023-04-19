@@ -1,10 +1,4 @@
-const PersonForm = ({
-  name,
-  handleClick,
-  handleName,
-  handleNumber,
-  number,
-}) => {
+const PersonForm = ({ name, addContact, handleName, handleNumber, number }) => {
   return (
     <>
       <div>
@@ -16,7 +10,7 @@ const PersonForm = ({
         <input value={number} onChange={handleNumber} />
       </div>
       <div>
-        <button type="submit" onClick={handleClick}>
+        <button type="submit" onClick={(e) => addContact(e, name)}>
           add
         </button>
       </div>

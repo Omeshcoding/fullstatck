@@ -16,22 +16,30 @@ const App = () => {
   const handleName = (e) => setNewName(e.target.value);
   const handleNumber = (e) => setNewNumber(e.target.value);
 
-  const handleClick = (e) => {
+  const addContact = (e, name) => {
     e.preventDefault();
     const newContact = {
       name: newName,
       number: newNumber,
     };
-    persons.map((person) =>
-      person.name === newContact.name
-        ? setPersons(persons)
-        : setPersons([...persons, newContact])
-    );
+    if (newContact.name && newContact.number) {
+      const person = persons.find((person) => person.name === name);
+      const changeNumber = { ...person, number: newNumber };
+      if (person) {
+        axios
+          .put(`http://localhost:3003/persons/${person.id}`, changeNumber)
+          .then((response) => response.data);
+        setNewName('');
+        setNewNumber('');
+      } else {
+        contactService.create(newContact).then((returnedData) => returnedData);
+        setNewName('');
+        setNewNumber('');
+      }
 
-    contactService.create(newContact).then((returnedData) => returnedData);
-    setNewName('');
-    setNewNumber('');
-    return alert(`${newName} is already added to phonebook`);
+      // console.log(persons);
+      return alert(`${newName} is already added to phonebook`);
+    }
   };
 
   const filterByName = persons.filter((person) => {
@@ -52,7 +60,7 @@ const App = () => {
     contactService.getAll().then((initialData) => {
       setPersons(initialData);
     });
-  }, []);
+  }, [newNumber]);
 
   return (
     <div>
@@ -67,7 +75,7 @@ const App = () => {
           handleName={handleName}
           number={newNumber}
           handleNumber={handleNumber}
-          handleClick={handleClick}
+          addContact={addContact}
         />
       </form>
       <h3>Numbers</h3>
