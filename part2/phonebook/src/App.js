@@ -37,7 +37,6 @@ const App = () => {
         setNewNumber('');
       }
 
-      // console.log(persons);
       return alert(`${newName} is already added to phonebook`);
     }
   };
@@ -49,7 +48,6 @@ const App = () => {
   });
 
   const deleteNumber = (id, name) => {
-    console.log('deleted', id);
     const newContact = persons.filter((person) => person.id !== id);
     contactService.deleteContact(id).then((response) => {
       window.confirm(`Delete ${name}`) && setPersons(newContact);
