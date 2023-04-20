@@ -5,12 +5,20 @@ import contactService from './services/contact';
 import Filter from '../src/components/Filter';
 import Persons from '../src/components/Persons';
 import PersonForm from '../src/components/PersonForm';
+import {
+  SuccessNotification,
+  ErrorNotification,
+} from './components/Notification';
 
 const App = () => {
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [searchName, setSearchName] = useState('');
   const [persons, setPersons] = useState([]);
+  const [notification, setNotification] = useState({
+    message: null,
+    type: null,
+  });
 
   const handleSearch = (e) => setSearchName(e.target.value);
   const handleName = (e) => setNewName(e.target.value);
@@ -26,18 +34,29 @@ const App = () => {
       const person = persons.find((person) => person.name === name);
       const changeNumber = { ...person, number: newNumber };
       if (person) {
-        axios
-          .put(`http://localhost:3003/persons/${person.id}`, changeNumber)
-          .then((response) => response.data);
+        contactService
+          .update(person.id, changeNumber)
+          .then((response) => response.data)
+          .catch((error) => {
+            setNotification({
+              message: `Information of ${newName} has already been removed from server`,
+              type: 'error',
+            });
+            setPersons(persons.filter((p) => p.id !== person.id));
+          });
         setNewName('');
         setNewNumber('');
       } else {
         contactService.create(newContact).then((returnedData) => returnedData);
+
         setNewName('');
         setNewNumber('');
       }
 
-      return alert(`${newName} is already added to phonebook`);
+      setNotification({ message: `Added ${newName}`, type: 'success' });
+      setTimeout(() => {
+        setNotification({ message: null, type: null });
+      }, 5000);
     }
   };
 
@@ -59,12 +78,22 @@ const App = () => {
       setPersons(initialData);
     });
   }, [newNumber]);
-
   return (
     <div>
-      <h2>Phonebook</h2>
-
+      <h1>Phonebook</h1>
       <Filter searchName={searchName} handleSearch={handleSearch} />
+      {notification.type === 'success' && (
+        <SuccessNotification
+          message={notification.message}
+          type={notification.type}
+        />
+      )}
+      {notification.type === 'error' && (
+        <ErrorNotification
+          message={notification.message}
+          type={notification.type}
+        />
+      )}
 
       <form>
         <h3>add a new</h3>

@@ -1,0 +1,15 @@
+.message {
+  color: green;
+  text-transform: capitalize;
+  background-color: lightgrey;
+  font-size: 20px;
+  border-style: solid;
+  padding: 10px;
+  margin: 15px 0;
+}
+.success {
+  color: green;
+}
+.error {
+  color: red;
+}
