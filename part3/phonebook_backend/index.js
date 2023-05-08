@@ -1,7 +1,12 @@
 const express = require('express');
 const app = express();
+const morgan = require('morgan');
 
 app.use(express.json());
+app.use(
+  morgan(':method :url :status :res[content-length] - :response-time ms :body')
+);
+
 let phonebook = [
   {
     id: 1,
@@ -53,7 +58,7 @@ app.delete('/api/persons/:id', (req, res) => {
   res.status(204).end();
 });
 // Adding persons
-const generateRandomId = () => {
+const generateId = () => {
   const randomNumber = Math.floor(Math.random() * 1000) + 1;
   return randomNumber;
 };
@@ -75,10 +80,10 @@ app.post('/api/persons', (req, res) => {
     const person = {
       name: body.name,
       number: body.number,
-      id: generateRandomId(),
+      id: generateId(),
     };
-
     phonebook = phonebook.concat(person);
+    morgan.token('body', (req) => JSON.stringify(req.body));
     return res.json(person);
   }
 });
