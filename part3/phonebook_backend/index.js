@@ -1,12 +1,17 @@
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
+const cors = require('cors');
 
 app.use(express.json());
 app.use(
   morgan(':method :url :status :res[content-length] - :response-time ms :body')
 );
+app.use(cors());
 
+morgan.token('body', (req, res) => {
+  return JSON.stringify(req.body);
+});
 let phonebook = [
   {
     id: 1,
@@ -38,7 +43,6 @@ app.get('/info', (req, res) => {
   const currentTime = new Date().toString();
   res.send(`<p>Phonebook has info for ${noOfPeople} people</br> ${currentTime}</p>
  `);
-  console.log(1);
 });
 // singlePerson
 app.get('/api/persons/:id', (req, res) => {
@@ -83,11 +87,11 @@ app.post('/api/persons', (req, res) => {
       id: generateId(),
     };
     phonebook = phonebook.concat(person);
-    morgan.token('body', (req) => JSON.stringify(req.body));
+
     return res.json(person);
   }
 });
 
-app.listen(3002, () => {
-  console.log(`Server running on port 3002`);
+app.listen(4000, () => {
+  console.log(`Server running on port 4000`);
 });
