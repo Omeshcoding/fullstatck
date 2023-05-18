@@ -5,10 +5,10 @@ const { Schema } = mongoose;
 //   process.exit(1);
 // }
 
-// const password = process.argv[2];
-// const url = `mongodb+srv://umesharma78:${password}@cluster0.wznaume.mongodb.net/contact?retryWrites=true&w=majority`;
+const password = process.argv[2];
+const url = `mongodb+srv://umesharma78:${password}@cluster0.wznaume.mongodb.net/contact?retryWrites=true&w=majority`;
 
-const url = process.env.MONGODB_URI;
+// const url = process.env.MONGODB_URI;
 
 mongoose.set('strictQuery', false);
 mongoose.connect(url);
@@ -19,23 +19,23 @@ const phonebookSchema = new Schema({
 });
 
 const Contact = mongoose.model('person', phonebookSchema);
-Contact.find({}).then((result) => {
-  result.forEach((contact) => {
-    console.log(contact);
-  });
-  mongoose.connection.close();
-});
-
-// const contact = new Contact({
-//   name: 'Dan Abramov',
-//   number: '12-43-234345',
-// });
-
-// contact.save().then((result) => {
-//   console.log(result);
-//   console.log('contact saved');
+// Contact.find({}).then((result) => {
+//   result.forEach((contact) => {
+//     console.log(contact);
+//   });
 //   mongoose.connection.close();
 // });
+
+const contact = new Contact({
+  name: 'Dan Abramov',
+  number: '12-43-234345',
+});
+
+contact.save().then((result) => {
+  console.log(result);
+  console.log('contact saved');
+  mongoose.connection.close();
+});
 // {
 //    id: 1,
 //    name: 'Arto Hellas',

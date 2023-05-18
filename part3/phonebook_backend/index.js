@@ -73,20 +73,14 @@ app.post('/api/persons', (req, res) => {
   if (!body.number) {
     return res.status(400).json({ error: 'number missing' });
   }
-  const filterName = Person.find((persons) => {
-    return persons.name === body.name;
+
+  const person = new Person({
+    name: body.name,
+    number: body.number,
   });
-  if (filterName) {
-    return res.status(400).json({ error: 'name already exists' });
-  } else {
-    const person = new Person({
-      name: body.name,
-      number: body.number,
-    });
-    person.save().then((savedContact) => {
-      res.json(savedContact);
-    });
-  }
+  person.save().then((savedContact) => {
+    res.json(savedContact);
+  });
 });
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
