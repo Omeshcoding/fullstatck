@@ -65,6 +65,7 @@ app.delete('/api/persons/:id', (req, res) => {
 
 //Post
 app.post('/api/persons', (req, res) => {
+  console.log(req.body);
   const body = req.body;
   if (body.name === '') {
     return res.status(400).json({ error: 'name missing' });
@@ -85,9 +86,7 @@ app.post('/api/persons', (req, res) => {
     person.save().then((savedContact) => {
       res.json(savedContact);
     });
-    // phonebook = phonebook.concat(person);
   }
-  res.redirect('/');
 });
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
