@@ -1,7 +1,9 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const cors = require('cors');
+const Person = require('./models/phonebook');
 
 app.use(express.json());
 app.use(
@@ -37,7 +39,10 @@ let phonebook = [
 ];
 
 app.get('/api/persons', (req, res) => {
-  res.json(phonebook);
+  Person.find({}).then((person) => {
+    console.log(1, person);
+    res.json(person);
+  });
 });
 app.get('/info', (req, res) => {
   const noOfPeople = Math.max(...phonebook.map((p) => p.id));
@@ -47,14 +52,9 @@ app.get('/info', (req, res) => {
 });
 // singlePerson
 app.get('/api/persons/:id', (req, res) => {
-  const id = Number(req.params.id);
-  const person = phonebook.find((person) => person.id === id);
-  if (person) {
+  Person.findById(req.params.id).then((person) => {
     res.json(person);
-  } else {
-    res.statusMessage = 'Current person is not on the Phonebook';
-    res.status(404).end();
-  }
+  });
 });
 // deletePerson
 app.delete('/api/persons/:id', (req, res) => {
@@ -62,12 +62,8 @@ app.delete('/api/persons/:id', (req, res) => {
   phonebook = phonebook.filter((person) => person.id !== id);
   res.status(204).end();
 });
-// Adding persons
-const generateId = () => {
-  const randomNumber = Math.floor(Math.random() * 1000) + 1;
-  return randomNumber;
-};
 
+//Post
 app.post('/api/persons', (req, res) => {
   const body = req.body;
   if (body.name === '') {
@@ -76,23 +72,24 @@ app.post('/api/persons', (req, res) => {
   if (!body.number) {
     return res.status(400).json({ error: 'number missing' });
   }
-  const filterName = phonebook.find((persons) => {
+  const filterName = Person.find((persons) => {
     return persons.name === body.name;
   });
   if (filterName) {
     return res.status(400).json({ error: 'name already exists' });
   } else {
-    const person = {
+    const person = new Person({
       name: body.name,
       number: body.number,
-      id: generateId(),
-    };
-    phonebook = phonebook.concat(person);
-
-    return res.json(person);
+    });
+    person.save().then((savedContact) => {
+      res.json(savedContact);
+    });
+    // phonebook = phonebook.concat(person);
   }
+  res.redirect('/');
 });
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Server running on port 4000`);
 });
