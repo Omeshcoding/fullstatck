@@ -36,24 +36,41 @@ const App = () => {
       if (person) {
         contactService
           .update(person.id, changeNumber)
-          .then((response) => response.data)
+          .then((response) => {
+            setNotification({ message: `Added ${newName}`, type: 'success' });
+
+            return response.data;
+          })
           .catch((error) => {
             setNotification({
               message: `Information of ${newName} has already been removed from server`,
               type: 'error',
             });
+
             setPersons(persons.filter((p) => p.id !== person.id));
           });
-        setNewName('');
-        setNewNumber('');
       } else {
-        contactService.create(newContact).then((returnedData) => returnedData);
-
-        setNewName('');
-        setNewNumber('');
+        contactService
+          .create(newContact)
+          .then((returnedData) => {
+            setNotification({ message: `Added ${newName}`, type: 'success' });
+            return returnedData;
+          })
+          .catch((error) => {
+            console.log(1, newContact.name.length);
+            newContact.name.length < 3
+              ? setNotification({
+                  message: `Please enter a name with more than 3 character`,
+                  type: 'error',
+                })
+              : setNotification({
+                  message: `Enter a valid number`,
+                  type: 'error',
+                });
+          });
       }
-
-      setNotification({ message: `Added ${newName}`, type: 'success' });
+      setNewName('');
+      setNewNumber('');
       setTimeout(() => {
         setNotification({ message: null, type: null });
       }, 5000);
