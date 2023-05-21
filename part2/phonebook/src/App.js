@@ -57,7 +57,6 @@ const App = () => {
             return returnedData;
           })
           .catch((error) => {
-            console.log(1, newContact.name.length);
             newContact.name.length < 3
               ? setNotification({
                   message: `Please enter a name with more than 3 character`,

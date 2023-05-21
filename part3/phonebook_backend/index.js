@@ -63,7 +63,7 @@ app.delete('/api/persons/:id', (req, res) => {
 });
 
 //Post
-app.post('/api/persons', (req, res) => {
+app.post('/api/persons', (req, res, next) => {
   console.log(req.body);
   const body = req.body;
   if (body.name === '') {
@@ -77,9 +77,12 @@ app.post('/api/persons', (req, res) => {
     name: body.name,
     number: body.number,
   });
-  person.save().then((savedContact) => {
-    res.json(savedContact);
-  });
+  person
+    .save()
+    .then((savedContact) => {
+      res.json(savedContact);
+    })
+    .catch((error) => next(error));
 });
 // Update
 app.put('/api/persons/:id', (req, res, next) => {
