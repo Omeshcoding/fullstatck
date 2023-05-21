@@ -9,7 +9,7 @@ const Person = require('./models/phonebook');
 const errorHandler = (error, request, response, next) => {
   console.error(error.message);
   if (error.name === 'castError') {
-    return res.status(400).send({ error: 'malformatting id' });
+    return response.status(400).send({ error: 'malformatting id' });
   }
   next(error);
 };
@@ -21,7 +21,7 @@ app.use(
 app.use(cors());
 app.use(express.static('build'));
 
-morgan.token('body', (req, res) => {
+morgan.token('body', (req) => {
   return JSON.stringify(req.body);
 });
 
@@ -54,7 +54,7 @@ app.get('/api/persons/:id', (req, res, next) => {
     .catch((error) => next(error));
 });
 // deletePerson
-app.delete('/api/persons/:id', (req, res) => {
+app.delete('/api/persons/:id', (req, res, next) => {
   Person.findByIdAndRemove(req.params.id)
     .then((result) => {
       res.status(204).end();
@@ -101,5 +101,5 @@ app.put('/api/persons/:id', (req, res, next) => {
 app.use(errorHandler);
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
-  console.log(`Server running on port 4000`);
+  console.log('Server running on port 4000');
 });

@@ -7,7 +7,8 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "test": "echo \\ 'Error: no test\\ && exit 1",
-    "build": "npm install"
+    "build": "npm install",
+      "lint": "eslint ."
   },
   "author": "Umesh Sharma",
   "license": "ISC",
@@ -19,6 +20,7 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "eslint": "^8.41.0",
     "nodemon": "^2.0.22"
   }
 }
