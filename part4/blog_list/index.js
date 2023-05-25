@@ -1,19 +1,12 @@
-require('dotenv').config();
 const express = require('express');
 const app = express();
 const cors = require('cors');
 const mongoose = require('mongoose');
+const Blog = require('./models/blog');
+const config = require('./utils/config');
 
-const blogSchema = new mongoose.Schema({
-  title: String,
-  author: String,
-  url: String,
-  likes: Number,
-});
-
-const Blog = mongoose.model('Blog', blogSchema);
 // eslint-disable-next-line no-undef
-const url = process.env.MONGODB_BLOG;
+const url = config.MONGODB_BLOG;
 mongoose.connect(url).then(() => {
   console.log('connected to database');
 });
@@ -35,6 +28,6 @@ app.post('/api/blogs', (request, response) => {
   });
 });
 
-app.listen(4001, () => {
-  console.log('server is running in port 4001');
+app.listen(config.PORT, () => {
+  console.log(`server is running in port ${config.PORT}`);
 });
