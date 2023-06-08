@@ -18,5 +18,11 @@ const totalLikes = (blogs) => {
     return blogs.reduce(reducer, 0);
   }
 };
+const favoriteBlog = (blogs) => {
+  const max = Math.max(...blogs.map((blog) => blog.likes));
+  console.log(max);
+  console.log('hello');
+  return max;
+};
 
-module.exports = { dummy, totalLikes };
+module.exports = { dummy, totalLikes, favoriteBlog };
