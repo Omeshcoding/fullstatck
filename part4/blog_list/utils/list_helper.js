@@ -20,8 +20,6 @@ const totalLikes = (blogs) => {
 };
 const favoriteBlog = (blogs) => {
   const max = Math.max(...blogs.map((blog) => blog.likes));
-  console.log(max);
-  console.log('hello');
   return max;
 };
 
