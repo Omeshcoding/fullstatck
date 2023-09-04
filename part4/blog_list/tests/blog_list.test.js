@@ -42,8 +42,14 @@ test('Post request creates a new blog post', async () => {
 
 test('verify if likes property is there', async () => {
   const response = await api.get('/api/blogs');
-  // console.log(response.body);
   response.body.map((elem) => expect(elem).toHaveProperty('likes'));
+});
+test('blog without a title and url is not added', async () => {
+  const newBlog = {
+    author: 'Umesh',
+    likes: 200,
+  };
+  await api.post('/api/blogs').send(newBlog).expect(400);
 });
 afterAll(async () => {
   await mongoose.connection.close();
