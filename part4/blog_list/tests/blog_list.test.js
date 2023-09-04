@@ -40,6 +40,11 @@ test('Post request creates a new blog post', async () => {
   expect(contents).toContain('https://umeshblogs.vercel.app/post/nextjs');
 });
 
+test('verify if likes property is there', async () => {
+  const response = await api.get('/api/blogs');
+  // console.log(response.body);
+  response.body.map((elem) => expect(elem).toHaveProperty('likes'));
+});
 afterAll(async () => {
   await mongoose.connection.close();
 });
