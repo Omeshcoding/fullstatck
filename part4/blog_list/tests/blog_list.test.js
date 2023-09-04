@@ -47,9 +47,29 @@ test('verify if likes property is there', async () => {
 test('blog without a title and url is not added', async () => {
   const newBlog = {
     author: 'Umesh',
-    likes: 200,
+    likes: 204,
   };
   await api.post('/api/blogs').send(newBlog).expect(400);
+});
+
+test('succeeds with status code 204 if id is valid', async () => {
+  const blogToStart = await Blog.find({});
+  const blogToDelete = blogToStart[0];
+
+  await api.delete(`/api/blogs/${blogToDelete.id}`).expect(204);
+});
+
+test('succeeds with status code 200 if blog is updated', async () => {
+  const updatedBlog = {
+    title: 'Jest is awesome',
+    author: 'Umesh',
+    url: 'https://umeshblogs.vercel.app/post/nextjs',
+    likes: 201,
+  };
+  await api
+    .put(`/api/blogs/64f5d9e035d99a2245ea9f67`)
+    .send(updatedBlog)
+    .expect(200);
 });
 afterAll(async () => {
   await mongoose.connection.close();
