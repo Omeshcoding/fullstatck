@@ -1,1 +1,12 @@
 GET  http://localhost:4001/api/users
+
+
+###
+POST http://localhost:4001/api/users
+Content-Type:application/json
+
+{
+ "username":"umesh_sha",
+ "name":"Umesh Sharma",
+ "password":"letsgooo."
+}

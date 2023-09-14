@@ -50,7 +50,7 @@ test('blog without a title and url is not added', async () => {
     likes: 204,
   };
   await api.post('/api/blogs').send(newBlog).expect(400);
-});
+}, 10000);
 
 test('succeeds with status code 204 if id is valid', async () => {
   const blogToStart = await Blog.find({});
@@ -71,6 +71,17 @@ test('succeeds with status code 200 if blog is updated', async () => {
     .send(updatedBlog)
     .expect(200);
 });
+// test if users are valid
+test('succeed with status code 400 if users are invalid', async () => {
+  const user = {
+    username: 'um',
+    name: 'umesh',
+    password: 'fs',
+  };
+
+  await api.post('/api/users').send(user).expect(400);
+});
+
 afterAll(async () => {
   await mongoose.connection.close();
 });

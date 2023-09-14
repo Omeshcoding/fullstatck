@@ -7,8 +7,9 @@ POST http://localhost:4001/api/blogs
 Content-Type: application/json
 
 {
-   "title": "custom Validator",
+   "title": "custom Validatorss",
   "author": "mongoose",
   "url": "https://mongoosejs.com/docs/validation.html#custom-validators",
-  "likes": 200
+  "likes": 200,
+  "userId":"65029ba16d2967ca4b5ed4ab"
 }
