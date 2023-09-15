@@ -5,11 +5,11 @@ GET http://localhost:4001/api/blogs
 ###
 POST http://localhost:4001/api/blogs
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVtZXNoXyIsImlkIjoiNjUwMzBkMmY0ZDUyZDFhZGY3MGNjMzg5IiwiaWF0IjoxNjk0NzE0NDg4fQ.CYNGn8tsqbZnGID73t-rjRR8aRvMFjsiJeZdxTlTXWs
 
 {
-   "title": "custom Validatorss",
-  "author": "mongoose",
-  "url": "https://mongoosejs.com/docs/validation.html#custom-validators",
+   "title": "custom ValidatorFSFSsss",
+  "author": "mongoosesFDSFe",
+  "url": "https:",
   "likes": 200,
-  "userId":"65029ba16d2967ca4b5ed4ab"
 }
