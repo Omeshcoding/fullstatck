@@ -1,8 +1,8 @@
-const jwt = require('jsonwebtoken');
 const blogRouter = require('express').Router();
 const User = require('../models/user');
 
 const Blog = require('../models/blog');
+const { userExtractor } = require('../utils/middleware');
 
 blogRouter.get('/', async (request, response) => {
   const blogs = await Blog.find({}).populate('user', { username: 1, name: 1 });
@@ -18,15 +18,10 @@ blogRouter.get('/:id', async (request, response) => {
 });
 
 // Post
-blogRouter.post('/', async (request, response) => {
+blogRouter.post('/', userExtractor, async (request, response) => {
   const body = request.body;
-  // eslint-disable-next-line no-undef
-  const decodedToken = jwt.verify(request.token, process.env.SECRET);
-  if (!decodedToken.id) {
-    return response.status(401).json({ error: 'token invalid' });
-  }
 
-  const user = await User.findById(decodedToken.id);
+  const user = await User.findById(request.user);
 
   const blog = new Blog({
     title: body.title,
@@ -47,9 +42,18 @@ blogRouter.post('/', async (request, response) => {
   }
 });
 // Delete blog
-blogRouter.delete('/:id', async (request, response) => {
-  await Blog.findByIdAndRemove(request.params.id);
-  response.status(204).end();
+blogRouter.delete('/:id', userExtractor, async (request, response) => {
+  const user = await Blog.findById(request.params.id);
+  const userId = user.user.toString();
+  if (userId === request.user) {
+    await Blog.findByIdAndRemove(request.params.id);
+    response.status(204).end();
+  } else {
+    response
+      .status(401)
+      .json({ error: 'invalid user sign in from different account' })
+      .end();
+  }
 });
 // Update Blog
 blogRouter.put('/:id', async (request, response) => {

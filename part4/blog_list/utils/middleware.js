@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken');
+
 const errorHandler = (error, request, response, next) => {
   console.log(error);
   if (error.name === 'JsonWebTokenError') {
@@ -18,4 +20,15 @@ const tokenExtractor = (request, response, next) => {
   }
   next();
 };
-module.exports = { errorHandler, tokenExtractor };
+
+const userExtractor = (request, response, next) => {
+  const decodedToken = jwt.verify(request.token, process.env.SECRET);
+  if (!decodedToken.id) {
+    return response.status(401).json({ error: 'token invalid' });
+  } else {
+    request.user = decodedToken.id;
+  }
+  next();
+};
+
+module.exports = { errorHandler, tokenExtractor, userExtractor };
