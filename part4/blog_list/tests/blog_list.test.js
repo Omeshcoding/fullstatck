@@ -13,6 +13,7 @@ const user = {
   id: '650299e9350c269f596d218a',
 };
 const token = jwt.sign(user, secret);
+
 test('blogs are returned in correct json format', async () => {
   await api
     .get('/api/blogs')

@@ -98,7 +98,7 @@ describe('Favroite blogs', () => {
       title: 'Go To Statement Considered Harmful',
       author: 'Edsger W. Dijkstra',
       url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
-      likes: 5,
+      likes: 25,
       __v: 0,
     },
     {
@@ -134,10 +134,19 @@ describe('Favroite blogs', () => {
       __v: 0,
     },
   ];
-
+  console.log(listHelper.mostBlogs(blogs));
   test('blogs with most likes', () => {
-    expect(listHelper.favoriteBlog(blogs)).toEqual(
-      Math.max(...blogs.map((blog) => blog.likes))
-    );
+    expect(listHelper.favoriteBlog(blogs)).toEqual({
+      title: 'Go To Statement Considered Harmful',
+      author: 'Edsger W. Dijkstra',
+      likes: 25,
+    });
+  });
+
+  test('author with most blogs', async () => {
+    expect(listHelper.mostBlogs(blogs)).toEqual({
+      author: 'Robert C. Martin',
+      blogs: 3,
+    });
   });
 });
