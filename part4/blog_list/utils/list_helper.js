@@ -1,5 +1,4 @@
 const dummy = (blogs) => {
-  // console.log(blogs);
   return 1;
 };
 
@@ -8,7 +7,6 @@ const totalLikes = (blogs) => {
     acc += curr.likes;
     return acc;
   };
-  // console.log(blogs);
 
   if (blogs.length === 0) {
     return 0;
