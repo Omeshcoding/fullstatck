@@ -134,7 +134,6 @@ describe('Favroite blogs', () => {
       __v: 0,
     },
   ];
-  console.log(listHelper.mostBlogs(blogs));
   test('blogs with most likes', () => {
     expect(listHelper.favoriteBlog(blogs)).toEqual({
       title: 'Go To Statement Considered Harmful',
@@ -147,6 +146,12 @@ describe('Favroite blogs', () => {
     expect(listHelper.mostBlogs(blogs)).toEqual({
       author: 'Robert C. Martin',
       blogs: 3,
+    });
+  });
+  test('author with most likes', async () => {
+    expect(listHelper.mostLikes(blogs)).toEqual({
+      author: 'Edsger W. Dijkstra',
+      likes: 37,
     });
   });
 });
