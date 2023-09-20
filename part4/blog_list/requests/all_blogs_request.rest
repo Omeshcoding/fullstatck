@@ -5,10 +5,10 @@ GET http://localhost:4001/api/blogs
 ###
 POST http://localhost:4001/api/blogs
 Content-Type: application/json
-Authorization: Bearer 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVtZXNoXyIsImlkIjoiNjUwMzBkMmY0ZDUyZDFhZGY3MGNjMzg5IiwiaWF0IjoxNjk1MTQzNTk2fQ.N6A-TdsIrGZgNUxRoJe8hiIj25W0saTkfPi6QQN5xiw
 
 {
-   "title": "custom ValidatorFSFSsss",
+ "title": "Understanding is Important",
   "author": "mongoosesFDSFe",
   "url": "https:",
   "likes": 200,
