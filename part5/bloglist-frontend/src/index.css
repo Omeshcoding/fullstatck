@@ -1,0 +1,16 @@
+.message {
+  padding: 0.7rem 1rem;
+  border-radius: 5px;
+  background: #cabdbd;
+  font-size: 20px;
+  margin-bottom: 1rem;
+}
+
+.error_message {
+  border: 4px solid red;
+  color: red;
+}
+.success_message {
+  color: green;
+  border: 4px solid green;
+}
