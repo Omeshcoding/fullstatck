@@ -1,11 +1,7 @@
 import { useState, useEffect } from 'react';
 import Blog from './components/Blog';
 import blogService from './services/blogs';
-import loginService from './services/login';
-import {
-  ErrorNotification,
-  SuccessNotification,
-} from './components/Notification';
+import { SuccessNotification } from './components/Notification';
 import Togglable from './components/Togglable';
 import CreateBlogFrom from './components/CreateBlogFrom';
 import LoginForm from './components/LoginForm';
@@ -27,6 +23,7 @@ const App = () => {
     setUser(null);
   };
 
+  // Create  New Blog
   const handleAddBlog = (newObject) => {
     console.log(newObject);
     blogService.create(newObject).then((returnedBlog) => {
@@ -59,7 +56,7 @@ const App = () => {
           <p>
             {user.name} logged in <button onClick={handleLogout}>logout</button>
           </p>
-          <Togglable buttonLabel="new note">
+          <Togglable buttonLabel="create new blog">
             <CreateBlogFrom
               addBlog={handleAddBlog}
               setNotification={setNotification}
