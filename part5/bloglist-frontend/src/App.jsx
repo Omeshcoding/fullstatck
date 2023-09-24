@@ -14,6 +14,18 @@ const App = () => {
     type: null,
   });
 
+  // Sorted Blogs
+  blogs.sort((a, b) => b.likes - a.likes);
+
+  // Delete Blogs
+  const removeBlog = (id, title, author) => {
+    console.log('removed ', id);
+    const newBlog = blogs.filter((blog) => blog.id !== id);
+    window.confirm(`Remove blog ${title} by ${author}`) &&
+      blogService.deleteBlog(id).then((response) => {
+        return setBlogs(newBlog);
+      });
+  };
   useEffect(() => {
     blogService.getAll().then((blogs) => setBlogs(blogs));
   }, []);
@@ -63,7 +75,12 @@ const App = () => {
             />
           </Togglable>
           {blogs.map((blog) => (
-            <Blog key={blog.id} blog={blog} />
+            <Blog
+              key={blog.id}
+              blog={blog}
+              removeBlog={removeBlog}
+              user={user}
+            />
           ))}
         </>
       )}

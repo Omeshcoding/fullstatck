@@ -20,3 +20,9 @@
   padding: 0.4rem 5px;
   margin-bottom: 0.5rem;
 }
+.delete-btn {
+  background-color: rgb(143, 143, 248);
+  border-radius: 5px;
+  outline: none;
+  border: none;
+}
