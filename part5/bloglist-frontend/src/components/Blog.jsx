@@ -1,10 +1,17 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import blogService from '../services/blogs';
+import PropTypes from 'prop-types';
 
 const Blog = ({ blog, removeBlog, user }) => {
   const [show, setShow] = useState(false);
   const viewBlog = () => {
     setShow(!show);
+  };
+
+  Blog.propTypes = {
+    blog: PropTypes.object.isRequired,
+    removeBlog: PropTypes.func.isRequired,
+    user: PropTypes.object.isRequired,
   };
   const updateLike = () => {
     const blogUpdate = ++blog.likes;

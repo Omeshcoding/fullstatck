@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Blog from './components/Blog';
 import blogService from './services/blogs';
 import { SuccessNotification } from './components/Notification';
@@ -22,7 +22,7 @@ const App = () => {
     console.log('removed ', id);
     const newBlog = blogs.filter((blog) => blog.id !== id);
     window.confirm(`Remove blog ${title} by ${author}`) &&
-      blogService.deleteBlog(id).then((response) => {
+      blogService.deleteBlog(id).then(() => {
         return setBlogs(newBlog);
       });
   };

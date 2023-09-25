@@ -2,8 +2,13 @@ import React, { useState } from 'react';
 import { ErrorNotification } from '../components/Notification';
 import blogService from '../services/blogs';
 import loginService from '../services/login';
+import PropTypes from 'prop-types';
 
 const LoginForm = ({ setUser }) => {
+  LoginForm.propTypes = {
+    setUser: PropTypes.func.isRequired,
+  };
+
   const [username, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [notification, setNotification] = useState({

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import blogService from '../services/blogs';
+import PropTypes from 'prop-types';
 
 const CreateBlogFrom = ({ addBlog, setNotification }) => {
   const [newblog, setNewBlog] = useState({
@@ -7,7 +7,10 @@ const CreateBlogFrom = ({ addBlog, setNotification }) => {
     author: '',
     url: '',
   });
-
+  CreateBlogFrom.propTypes = {
+    addBlog: PropTypes.func.isRequired,
+    setNotification: PropTypes.func.isRequired,
+  };
   const handleAddBlog = (e) => {
     e.preventDefault();
     addBlog(newblog);
