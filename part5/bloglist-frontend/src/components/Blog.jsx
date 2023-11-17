@@ -31,7 +31,9 @@ const Blog = ({ blog, removeBlog, user }) => {
       <p>
         {' '}
         {blog.title} {blog.author}{' '}
-        <button onClick={viewBlog}>{!show ? 'view' : 'hide'}</button>
+        <button className="showBtn" onClick={viewBlog}>
+          {!show ? 'view' : 'hide'}
+        </button>
       </p>
       {show && (
         <div>
