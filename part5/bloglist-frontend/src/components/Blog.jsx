@@ -36,23 +36,27 @@ const Blog = ({ blog, removeBlog, user }) => {
         </button>
       </p>
       {show && (
-        <div>
-          <a href=""> {blog.url}</a>
+        <>
+          <div className="renderLikes">
+            <a href=""> {blog.url}</a>
+            <br />
+            likes {blog.likes === null ? 0 : blog.likes}{' '}
+            <button onClick={() => updateLike()}>like</button>
+          </div>
           <br />
-          likes {blog.likes === null ? 0 : blog.likes}{' '}
-          <button onClick={() => updateLike()}>like</button>
-          <br />
-          {blog.user?.username}
-          <br />
-          {user.username === blog.user?.username && (
-            <button
-              className="delete-btn"
-              onClick={() => removeBlog(blog.id, blog.title, blog.author)}
-            >
-              remove
-            </button>
-          )}
-        </div>
+          <div>
+            {blog.user?.username}
+            <br />
+            {user.username === blog.user?.username && (
+              <button
+                className="delete-btn"
+                onClick={() => removeBlog(blog.id, blog.title, blog.author)}
+              >
+                remove
+              </button>
+            )}
+          </div>
+        </>
       )}
     </div>
   );
