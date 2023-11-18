@@ -37,7 +37,6 @@ const App = () => {
 
   // Create  New Blog
   const handleAddBlog = (newObject) => {
-    console.log(newObject);
     blogService.create(newObject).then((returnedBlog) => {
       setBlogs(blogs.concat(returnedBlog));
     });

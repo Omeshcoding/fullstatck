@@ -49,6 +49,7 @@ const CreateBlogFrom = ({ addBlog, setNotification }) => {
             type="text"
             value={newblog.title}
             name="Title"
+            placeholder="title"
             onChange={({ target }) => handleNewBlog({ title: target.value })}
           />
         </div>
@@ -58,6 +59,7 @@ const CreateBlogFrom = ({ addBlog, setNotification }) => {
             type="text"
             value={newblog.author}
             name="Author"
+            placeholder="author"
             onChange={({ target }) => handleNewBlog({ author: target.value })}
           />
         </div>
@@ -67,6 +69,7 @@ const CreateBlogFrom = ({ addBlog, setNotification }) => {
             type="text"
             value={newblog.url}
             name="url"
+            placeholder="url"
             onChange={({ target }) => handleNewBlog({ url: target.value })}
           />
         </div>

@@ -36,12 +36,14 @@ const Blog = ({ blog, removeBlog, user }) => {
         </button>
       </p>
       {show && (
-        <>
+        <div>
           <div className="renderLikes">
             <a href=""> {blog.url}</a>
             <br />
             likes {blog.likes === null ? 0 : blog.likes}{' '}
-            <button onClick={() => updateLike()}>like</button>
+            <button className="likeBtn" onClick={() => updateLike()}>
+              like
+            </button>
           </div>
           <br />
           <div>
@@ -56,7 +58,7 @@ const Blog = ({ blog, removeBlog, user }) => {
               </button>
             )}
           </div>
-        </>
+        </div>
       )}
     </div>
   );
