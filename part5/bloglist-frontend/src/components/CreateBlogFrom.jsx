@@ -46,6 +46,7 @@ const CreateBlogFrom = ({ addBlog, setNotification }) => {
         <div>
           title:
           <input
+            id="title"
             type="text"
             value={newblog.title}
             name="Title"
@@ -56,6 +57,7 @@ const CreateBlogFrom = ({ addBlog, setNotification }) => {
         <div>
           author:
           <input
+            id="author"
             type="text"
             value={newblog.author}
             name="Author"
@@ -66,6 +68,7 @@ const CreateBlogFrom = ({ addBlog, setNotification }) => {
         <div>
           url:
           <input
+            id="url"
             type="text"
             value={newblog.url}
             name="url"
@@ -73,7 +76,9 @@ const CreateBlogFrom = ({ addBlog, setNotification }) => {
             onChange={({ target }) => handleNewBlog({ url: target.value })}
           />
         </div>
-        <button type="submit">create</button>
+        <button id="create" type="submit">
+          create
+        </button>
       </form>
     </div>
   );

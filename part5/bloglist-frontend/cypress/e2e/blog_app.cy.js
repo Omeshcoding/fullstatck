@@ -1,4 +1,4 @@
-describe('template spec', () => {
+describe('Blog app', () => {
   beforeEach(function () {
     cy.request('POST', `${Cypress.env('BACKEND')}/testing/reset`);
 
@@ -29,6 +29,22 @@ describe('template spec', () => {
         .should('contain', 'Wrong username or password')
         .should('have.css', 'border-style', 'solid')
         .should('have.css', 'color', 'rgb(255, 0, 0)');
+    });
+    describe('When logged in', function () {
+      beforeEach(function () {
+        cy.get('#username').type('umeshds_');
+        cy.get('#password').type('sdfjfkskooo');
+        cy.get('#submit').click();
+      });
+      it('A blog can be created', function () {
+        cy.contains('create new blog').click();
+        cy.get('#title').type('Cypress is Awesome');
+        cy.get('#author').type('Test');
+        cy.get('#url').type('http://test.com');
+        cy.get('#create').click();
+        cy.get('.border').contains('Cypress is Awesome').should('be.visible');
+        cy.get('.border').contains('Test').should('be.visible');
+      });
     });
   });
 });
