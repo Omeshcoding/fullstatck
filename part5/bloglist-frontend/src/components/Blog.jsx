@@ -41,7 +41,7 @@ const Blog = ({ blog, removeBlog, user }) => {
             <a href=""> {blog.url}</a>
             <br />
             likes {blog.likes === null ? 0 : blog.likes}{' '}
-            <button className="likeBtn" onClick={() => updateLike()}>
+            <button className="likeBtn" onDoubleClick={() => updateLike()}>
               like
             </button>
           </div>

@@ -2,8 +2,14 @@
 POST http://localhost:4001/api/login
 Content-Type: application/json
 
- {
- "username":"umesh_",
- "password":"letsgooo"
- }
+ # {
+ # "username":"umesh_",
+ # "password":"letsgooo"
+ # }
  
+{
+ "username":"umeshds_",
+ //"name":"Umesh Sharma",
+ "password":"sdfjfkskooo"
+ 
+}

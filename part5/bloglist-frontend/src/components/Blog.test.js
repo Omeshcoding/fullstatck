@@ -49,16 +49,15 @@ describe('Bloglist test', () => {
     expect(view).toHaveTextContent('likes');
   });
 
-  // test('like button is clicked twice the prop is called twice', async () => {
-  //   const button = container.querySelector('.showBtn');
-  //   const userShow = userEvent.setup();
-  //   userShow.click(button);
+  test('like button is clicked twice the prop is called twice', async () => {
+    const button = container.querySelector('.showBtn');
+    const userShow = userEvent.setup();
+    userShow.click(button);
 
-  //   const likeButton = container.querySelector('.likeBtn');
-  //   await userShow.click(likeButton);
-  //   await userShow.click(likeButton);
-  //   screen.debug(likeButton);
+    const likeButton = container.querySelector('.likeBtn');
+    await userShow.click(likeButton);
+    await userShow.click(likeButton);
 
-  //   expect(mockUpdateLike.mock.calls).toHaveLength(2);
-  // });
+    expect(mockUpdateLike.mock.calls).toHaveLength(2);
+  });
 });
