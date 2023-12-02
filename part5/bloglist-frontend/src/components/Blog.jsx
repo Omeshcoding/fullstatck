@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 const Blog = ({ blog, removeBlog, user }) => {
   const [show, setShow] = useState(false);
+  const [like, setLike] = useState(0);
   const viewBlog = () => {
     setShow(!show);
   };
@@ -15,6 +16,7 @@ const Blog = ({ blog, removeBlog, user }) => {
   };
   const updateLike = () => {
     const blogUpdate = ++blog.likes;
+    setLike(blogUpdate);
     const newObject = {
       user: blog.user.id,
       likes: blogUpdate,
@@ -40,8 +42,8 @@ const Blog = ({ blog, removeBlog, user }) => {
           <div className="renderLikes">
             <a href=""> {blog.url}</a>
             <br />
-            likes {blog.likes === null ? 0 : blog.likes}{' '}
-            <button className="likeBtn" onDoubleClick={() => updateLike()}>
+            likes {blog.likes !== null ? blog.likes : 0}{' '}
+            <button className="likeBtn" onClick={() => updateLike()}>
               like
             </button>
           </div>

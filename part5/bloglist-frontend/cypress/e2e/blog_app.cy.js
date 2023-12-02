@@ -32,18 +32,28 @@ describe('Blog app', () => {
     });
     describe('When logged in', function () {
       beforeEach(function () {
-        cy.get('#username').type('umeshds_');
-        cy.get('#password').type('sdfjfkskooo');
-        cy.get('#submit').click();
+        cy.login({ username: 'umeshds_', password: 'sdfjfkskooo' });
       });
       it('A blog can be created', function () {
-        cy.contains('create new blog').click();
-        cy.get('#title').type('Cypress is Awesome');
-        cy.get('#author').type('Test');
-        cy.get('#url').type('http://test.com');
-        cy.get('#create').click();
+        cy.createBlog({
+          title: 'Cypress is Awesome',
+          author: 'Test',
+          url: 'http://test.com',
+        });
         cy.get('.border').contains('Cypress is Awesome').should('be.visible');
         cy.get('.border').contains('Test').should('be.visible');
+      });
+      it('Users can like a blog', function () {
+        cy.createBlog({
+          title: 'Cypress is Awesome',
+          author: 'Test',
+          url: 'http://test.com',
+          likes: 1110,
+        });
+        cy.get('.showBtn').click();
+        cy.get('.renderLikes').should('contain', 'likes 1110');
+        cy.get('.likeBtn').click();
+        cy.get('.renderLikes').should('contain', 'likes 1111');
       });
     });
   });
