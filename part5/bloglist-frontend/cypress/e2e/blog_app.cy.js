@@ -55,6 +55,18 @@ describe('Blog app', () => {
         cy.get('.likeBtn').click();
         cy.get('.renderLikes').should('contain', 'likes 1111');
       });
+      it('creator can delete their own blog', function () {
+        cy.createBlog({
+          title: 'Cypress is Awesome',
+          author: 'Test',
+          url: 'http://test.com',
+          likes: 1110,
+        });
+        cy.get('.border').should('contain', 'Cypress is Awesome');
+        cy.get('.showBtn').click();
+        cy.contains('remove').click();
+        cy.contains('Cypress is Awesome').should('not.exist');
+      });
     });
   });
 });
