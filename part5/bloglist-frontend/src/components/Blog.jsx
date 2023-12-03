@@ -43,7 +43,7 @@ const Blog = ({ blog, removeBlog, user }) => {
             <a href=""> {blog.url}</a>
             <br />
             likes {blog.likes !== null ? blog.likes : 0}{' '}
-            <button className="likeBtn" onClick={() => updateLike()}>
+            <button className="likeBtn" onClick={updateLike}>
               like
             </button>
           </div>

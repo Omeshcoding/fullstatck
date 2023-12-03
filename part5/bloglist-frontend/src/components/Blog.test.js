@@ -1,12 +1,12 @@
 import React from 'react';
 import '@testing-library/jest-dom';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import Blog from './Blog';
 import userEvent from '@testing-library/user-event';
 
 describe('Bloglist test', () => {
   let container;
-  const mockUpdateLike = jest.fn();
+  let mockUpdateLike = jest.fn();
   beforeEach(() => {
     const user = { username: 'umesh_', id: 1 };
     const blog = {
@@ -52,11 +52,12 @@ describe('Bloglist test', () => {
   test('like button is clicked twice the prop is called twice', async () => {
     const button = container.querySelector('.showBtn');
     const userShow = userEvent.setup();
-    userShow.click(button);
+    await userShow.click(button);
 
-    const likeButton = container.querySelector('.likeBtn');
+    const likeButton = screen.getByText('like');
     await userShow.click(likeButton);
     await userShow.click(likeButton);
+    screen.debug(likeButton);
 
     expect(mockUpdateLike.mock.calls).toHaveLength(2);
   });
