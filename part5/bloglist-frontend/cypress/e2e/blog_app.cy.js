@@ -33,39 +33,46 @@ describe('Blog app', () => {
     describe('When logged in', function () {
       beforeEach(function () {
         cy.login({ username: 'umeshds_', password: 'sdfjfkskooo' });
-      });
-      it('A blog can be created', function () {
-        cy.createBlog({
-          title: 'Cypress is Awesome',
-          author: 'Test',
-          url: 'http://test.com',
-        });
-        cy.get('.border').contains('Cypress is Awesome').should('be.visible');
-        cy.get('.border').contains('Test').should('be.visible');
-      });
-      it('Users can like a blog', function () {
         cy.createBlog({
           title: 'Cypress is Awesome',
           author: 'Test',
           url: 'http://test.com',
           likes: 1110,
         });
+      });
+      it('A blog can be created', function () {
+        cy.get('.border').contains('Cypress is Awesome').should('be.visible');
+        cy.get('.border').contains('Test').should('be.visible');
+      });
+      it('Users can like a blog', function () {
         cy.get('.showBtn').click();
         cy.get('.renderLikes').should('contain', 'likes 1110');
         cy.get('.likeBtn').click();
         cy.get('.renderLikes').should('contain', 'likes 1111');
       });
       it('creator can delete their own blog', function () {
-        cy.createBlog({
-          title: 'Cypress is Awesome',
-          author: 'Test',
-          url: 'http://test.com',
-          likes: 1110,
-        });
         cy.get('.border').should('contain', 'Cypress is Awesome');
         cy.get('.showBtn').click();
         cy.contains('remove').click();
         cy.contains('Cypress is Awesome').should('not.exist');
+      });
+
+      it('delete button is not visible to other users', function () {
+        const user = {
+          name: 'unknown',
+          username: 'unknownuser',
+          password: 'testpassword',
+        };
+        cy.request('POST', `${Cypress.env('BACKEND')}/users/`, user);
+        cy.loginAsDifferentUser({
+          username: 'unknownuser',
+          password: 'testpassword',
+        });
+
+        cy.get('.border').should('contain', 'Cypress is Awesome');
+
+        cy.get('.showBtn').click();
+        cy.contains('remove').should('not.exist');
       });
     });
   });
