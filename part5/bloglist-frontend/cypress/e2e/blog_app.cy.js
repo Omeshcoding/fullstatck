@@ -74,6 +74,29 @@ describe('Blog app', () => {
         cy.get('.showBtn').click();
         cy.contains('remove').should('not.exist');
       });
+      describe('Sort the bloglist', function () {
+        it('sort the bloglist according to likes', function () {
+          cy.createBlog({
+            title: 'The title with the second most likes',
+            author: 'Test2',
+            url: 'http://test.com',
+            likes: 1112,
+          });
+          cy.createBlog({
+            title: 'The title with the most likes',
+            author: 'Test1',
+            url: 'http://test.com',
+            likes: 1114,
+          });
+
+          cy.get('.border')
+            .eq(0)
+            .should('contain', 'The title with the most likes');
+          cy.get('.border')
+            .eq(1)
+            .should('contain', 'The title with the second most likes');
+        });
+      });
     });
   });
 });
