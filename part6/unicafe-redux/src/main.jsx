@@ -8,25 +8,21 @@ const store = createStore(reducer);
 
 const App = () => {
   const good = () => {
-    let good = 0;
     store.dispatch({
       type: 'GOOD',
     });
   };
   const ok = () => {
-    let good = 0;
     store.dispatch({
       type: 'OK',
     });
   };
   const bad = () => {
-    let good = 0;
     store.dispatch({
       type: 'BAD',
     });
   };
   const reset = () => {
-    let good = 0;
     store.dispatch({
       type: 'ZERO',
       payload: {
