@@ -1,8 +1,6 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { hideNotification } from '../reducers/anecdoteReducer';
+import { useSelector } from 'react-redux';
 const Notification = () => {
-  let notification = useSelector((state) => state.anecdotes.notification);
-  const dispatch = useDispatch();
+  let notification = useSelector((state) => state.notification);
 
   const style = {
     border: 'solid',
@@ -10,10 +8,8 @@ const Notification = () => {
     borderWidth: 1,
     marginBottom: 10,
   };
-  setTimeout(() => {
-    dispatch(hideNotification());
-  }, 5000);
-  return <div style={notification && style}>{notification} </div>;
+
+  return <div style={notification && style}>{notification}</div>;
 };
 
 export default Notification;
