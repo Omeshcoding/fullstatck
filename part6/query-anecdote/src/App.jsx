@@ -24,7 +24,7 @@ const App = () => {
     queryFn: getAnecdotes,
     retry: 1,
   });
-  console.log(result);
+
   const anecdotes = result?.data;
   if (result.isLoading) {
     return <div>loading anecdote...</div>;
